@@ -18,7 +18,7 @@ if uploaded_file:
     columns = df.columns.tolist()
 
     # Allow user to select date and sales columns if not standard
-    st.markdown("### 🛠️ Select Columns for Analysis")
+    st.markdown("### Select Columns for Analysis")
     date_col = st.selectbox("Select the Date column", columns)
     sales_col = st.selectbox("Select the Sales column", columns)
 
