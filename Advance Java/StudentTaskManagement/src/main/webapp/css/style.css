@@ -1,0 +1,211 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+/* Centered pages */
+.page-center {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Card */
+.container {
+    background: #fff;
+    padding: 30px;
+    width: 90%;
+    max-width: 420px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Dashboard */
+.dashboard-page {
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.dashboard {
+    background: #fff;
+    padding: 30px;
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.navbar h2 {
+    margin: 0;
+}
+
+.logout-link {
+    display: inline-block;
+}
+
+/* Add task */
+.add-btn {
+    display: inline-block;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 12px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 6px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* Buttons */
+button {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background: #5a67d8;
+}
+
+.primary-btn {
+    width: 100%;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: #667eea;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.center-text {
+    text-align: center;
+    margin-top: 14px;
+}
+
+.center-text a {
+    display: inline-block;
+}
+
+.inline-link {
+    display: inline-block;
+    margin-left: 6px;
+}
+
+.center-link {
+    display: block;
+    text-align: center;
+    margin-top: 14px;
+}
+
+/* Task cards */
+.task {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+    border-left: 5px solid #667eea;
+}
+
+.task h3 {
+    margin: 0 0 5px;
+}
+
+/* Action buttons */
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    align-items: center;
+}
+
+.actions form {
+    margin: 0;
+}
+
+.actions button {
+    width: auto;
+    min-width: 75px;
+    padding: 8px 14px;
+    font-size: 14px;
+}
+
+.edit-btn {
+    background: #667eea;
+}
+
+.delete-btn {
+    background: #e53e3e;
+}
+
+.delete-btn:hover {
+    background: #c53030;
+}
+
+.empty {
+    text-align: center;
+    color: #777;
+}
+
+.error {
+    color: #e53e3e;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 500px) {
+    .container, .dashboard {
+        padding: 20px;
+    }
+
+    .actions {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

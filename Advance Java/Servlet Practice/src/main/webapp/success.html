@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Successful</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: green;
+        }
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: white;
+            background: #007bff;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        a:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>✅ Form Submitted Successfully</h2>
+    <p>Thank you for providing your details.</p>
+
+    <h3>Your Submitted Data:</h3>
+    <p id="data"></p>
+
+    <a href="index.html">Go Back</a>
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+
+    let output = "";
+    for (const [key, value] of params.entries()) {
+        output += `<strong>${key}:</strong> ${value} <br>`;
+    }
+
+    document.getElementById("data").innerHTML = output;
+</script>
+
+</body>
+</html>
