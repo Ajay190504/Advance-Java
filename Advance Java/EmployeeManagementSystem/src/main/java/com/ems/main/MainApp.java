@@ -12,118 +12,160 @@ public class MainApp {
     public static void main(String[] args) {
 
         try (Scanner sc = new Scanner(System.in)) {
-			EmployeeDAO dao = new EmployeeDAO();
 
-			while (true) {
+            EmployeeDAO dao = new EmployeeDAO();
 
-			    System.out.println("\n===== EMPLOYEE MANAGEMENT SYSTEM =====");
-			    System.out.println("1. Add Employee");
-			    System.out.println("2. Get Employee By ID");
-			    System.out.println("3. Get All Employees");
-			    System.out.println("4. Update Salary");
-			    System.out.println("5. Delete Employee");
-			    System.out.println("6. Search By Department");
-			    System.out.println("7. Exit");
+            while (true) {
 
-			    int choice = sc.nextInt();
-			    sc.nextLine(); // clear buffer
+                System.out.println("\n===== EMPLOYEE MANAGEMENT SYSTEM =====");
+                System.out.println("1. Add Employee");
+                System.out.println("2. Get Employee By ID");
+                System.out.println("3. Get All Employees");
+                System.out.println("4. Get Employees By City");
+                System.out.println("5. Update Full Employee");
+                System.out.println("6. Update Salary");
+                System.out.println("7. Delete Employee");
+                System.out.println("8. Exit");
+                System.out.print("Enter choice: ");
 
-			    switch (choice) {
+                int choice = sc.nextInt();
+                sc.nextLine();
 
-			        case 1:
-			            System.out.print("First Name: ");
-			            String fn = sc.nextLine();
+                switch (choice) {
 
-			            System.out.print("Last Name: ");
-			            String ln = sc.nextLine();
+                    case 1: {
+                        Employee emp = readEmployee(sc, false);
+                        dao.insert(emp);
+                        break;
+                    }
 
-			            System.out.print("Email: ");
-			            String email = sc.nextLine();
+                    case 2: {
+                        System.out.print("Enter ID: ");
+                        int id = sc.nextInt();
 
-			            System.out.print("Phone: ");
-			            String phone = sc.nextLine();
+                        Employee emp = dao.getById(id);
 
-			            System.out.print("Department: ");
-			            String dept = sc.nextLine();
+                        if (emp != null) {
+                            System.out.println(emp);
+                        } else {
+                            System.out.println("Employee not found");
+                        }
 
-			            System.out.print("Designation: ");
-			            String desig = sc.nextLine();
+                        break;
+                    }
 
-			            System.out.print("Salary: ");
-			            double sal = sc.nextDouble();
-			            sc.nextLine();
+                    case 3: {
+                        List<Employee> list = dao.getAll();
 
-			            System.out.print("Gender: ");
-			            String gender = sc.nextLine();
+                        if (list == null || list.isEmpty()) {
+                            System.out.println("No employees found");
+                        } else {
+                            list.forEach(System.out::println);
+                        }
 
-			            System.out.print("Date of Joining (yyyy-MM-dd): ");
-			            String dojStr = sc.nextLine();
+                        break;
+                    }
 
-			            // Convert String → LocalDate
-			            LocalDate doj = LocalDate.parse(dojStr);
+                    case 4: {
+                        System.out.print("Enter City: ");
+                        String city = sc.nextLine();
 
-			            System.out.print("City: ");
-			            String city = sc.nextLine();
+                        List<Employee> cityList = dao.getByCity(city);
 
-			            System.out.print("State: ");
-			            String state = sc.nextLine();
+                        if (cityList == null || cityList.isEmpty()) {
+                            System.out.println("No employees found in this city");
+                        } else {
+                            cityList.forEach(System.out::println);
+                        }
 
-			            System.out.print("Country: ");
-			            String country = sc.nextLine();
+                        break;
+                    }
 
-			            Employee emp = new Employee(
-			                    fn, ln, email, phone, dept,
-			                    desig, sal, gender, doj,
-			                    city, state, country
-			            );
+                    case 5: {
+                        Employee emp = readEmployee(sc, true);
+                        dao.updateEmployee(emp);
+                        break;
+                    }
 
-			            dao.insert(emp);
-			            System.out.println("Employee Added!");
-			            break;
+                    case 6: {
+                        System.out.print("Enter ID: ");
+                        int id = sc.nextInt();
 
-			        case 2:
-			            System.out.print("Enter ID: ");
-			            int id = sc.nextInt();
+                        System.out.print("Enter New Salary: ");
+                        double salary = sc.nextDouble();
 
-			            System.out.println(dao.getById(id));
-			            break;
+                        dao.updateSalary(id, salary);
+                        break;
+                    }
 
-			        case 3:
-			            List<Employee> list = dao.getAll();
-			            list.forEach(System.out::println);
-			            break;
+                    case 7: {
+                        System.out.print("Enter ID: ");
+                        int id = sc.nextInt();
 
-			        case 4:
-			            System.out.print("Enter ID: ");
-			            int uid = sc.nextInt();
+                        dao.delete(id);
+                        break;
+                    }
 
-			            System.out.print("New Salary: ");
-			            double newSal = sc.nextDouble();
+                    case 8: {
+                        System.out.println("Application closed");
+                        return;
+                    }
 
-			            dao.updateSalary(uid, newSal);
-			            System.out.println("Updated!");
-			            break;
+                    default:
+                        System.out.println("Invalid choice");
+                }
+            }
+        }
+    }
 
-			        case 5:
-			            System.out.print("Enter ID: ");
-			            int did = sc.nextInt();
+    // Reads employee details from user
+    private static Employee readEmployee(Scanner sc, boolean includeId) {
 
-			            dao.delete(did);
-			            System.out.println("Deleted!");
-			            break;
+        Employee emp = new Employee();
 
-			        case 6:
-			            System.out.print("Enter Department: ");
-			            String d = sc.next();
+        if (includeId) {
+            System.out.print("Enter ID: ");
+            emp.setId(sc.nextInt());
+            sc.nextLine();
+        }
 
-			            List<Employee> deptList = dao.getByDepartment(d);
-			            deptList.forEach(System.out::println);
-			            break;
+        System.out.print("First Name: ");
+        emp.setFirstName(sc.nextLine());
 
-			        case 7:
-			            System.exit(0);
-			    }
-			}
-		}
+        System.out.print("Last Name: ");
+        emp.setLastName(sc.nextLine());
+
+        System.out.print("Email: ");
+        emp.setEmail(sc.nextLine());
+
+        System.out.print("Phone: ");
+        emp.setPhone(sc.nextLine());
+
+        System.out.print("Department: ");
+        emp.setDepartment(sc.nextLine());
+
+        System.out.print("Designation: ");
+        emp.setDesignation(sc.nextLine());
+
+        System.out.print("Salary: ");
+        emp.setSalary(sc.nextDouble());
+        sc.nextLine();
+
+        System.out.print("Gender: ");
+        emp.setGender(sc.nextLine());
+
+        System.out.print("Date of Joining (yyyy-MM-dd): ");
+        emp.setDateOfJoining(LocalDate.parse(sc.nextLine()));
+
+        System.out.print("City: ");
+        emp.setCity(sc.nextLine());
+
+        System.out.print("State: ");
+        emp.setState(sc.nextLine());
+
+        System.out.print("Country: ");
+        emp.setCountry(sc.nextLine());
+
+        return emp;
     }
 }
