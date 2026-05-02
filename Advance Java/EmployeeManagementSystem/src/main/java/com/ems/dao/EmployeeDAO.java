@@ -81,7 +81,28 @@ public class EmployeeDAO {
         }
     }
 
-    // 4. UPDATE FULL EMPLOYEE (HQL)
+       // 4. GET BY CITY
+    public List<Employee> getByCity(String city) {
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+            Query<Employee> q = session.createQuery(
+                    "from Employee where city = :city",
+                    Employee.class
+            );
+
+            q.setParameter("city", city);
+
+            return q.list();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+   
+
+    // 5. UPDATE FULL EMPLOYEE (HQL)
     public void updateEmployee(Employee emp) {
 
         Transaction tx = null;
@@ -127,7 +148,7 @@ public class EmployeeDAO {
         }
     }
 
-    // 5. UPDATE SALARY
+    // 6. UPDATE SALARY
     public void updateSalary(int id, double salary) {
 
         Transaction tx = null;
@@ -157,7 +178,7 @@ public class EmployeeDAO {
         }
     }
 
-    // 6. DELETE BY ID
+    // 7. DELETE BY ID
     public void delete(int id) {
 
         Transaction tx = null;
@@ -186,128 +207,4 @@ public class EmployeeDAO {
         }
     }
 
-    // 7. GET BY DEPARTMENT
-    public List<Employee> getByDepartment(String dept) {
-
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-            Query<Employee> q = session.createQuery(
-                    "from Employee where department = :dept",
-                    Employee.class
-            );
-
-            q.setParameter("dept", dept);
-
-            return q.list();
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
-    // 8. GET BY CITY
-    public List<Employee> getByCity(String city) {
-
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-            Query<Employee> q = session.createQuery(
-                    "from Employee where city = :city",
-                    Employee.class
-            );
-
-            q.setParameter("city", city);
-
-            return q.list();
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
-    // 9. GET BY SALARY > X
-    public List<Employee> getBySalaryGreaterThan(double salary) {
-
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-            Query<Employee> q = session.createQuery(
-                    "from Employee where salary > :sal",
-                    Employee.class
-            );
-
-            q.setParameter("sal", salary);
-
-            return q.list();
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
-    // 10. SORT BY SALARY DESC
-    public List<Employee> sortBySalaryDesc() {
-
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-            Query<Employee> q = session.createQuery(
-                    "from Employee order by salary desc",
-                    Employee.class
-            );
-
-            return q.list();
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
-    // 11. COUNT
-    public long countEmployees() {
-
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-            Query<Long> q = session.createQuery(
-                    "select count(e) from Employee e",
-                    Long.class
-            );
-
-            Long count = q.uniqueResult();
-
-            return count != null ? count : 0;
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return 0;
-        }
-    }
-
-    // 12. BULK UPDATE (salary increase)
-    public void increaseSalaryByDepartment(String dept, double percent) {
-
-        Transaction tx = null;
-
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-            tx = session.beginTransaction();
-
-            MutationQuery q = session.createMutationQuery(
-                    "update Employee set salary = salary + (salary * :p / 100) where department = :d"
-            );
-
-            q.setParameter("p", percent);
-            q.setParameter("d", dept);
-
-            q.executeUpdate();
-
-            tx.commit();
-            System.out.println("Bulk updated");
-
-        } catch (Exception e) {
-            if (tx != null) tx.rollback();
-            System.out.println(e.getMessage());
-        }
-    }
 }
