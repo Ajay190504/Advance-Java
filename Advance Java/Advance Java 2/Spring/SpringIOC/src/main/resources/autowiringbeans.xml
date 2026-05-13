@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Dev bean from com.autowiring package -->
+    <bean id="dev1" class="com.autowiring.Dev" autowire="byName">
+
+        <!--
+            Setter Injection:
+            property name="com" means Spring will call setCom(...)
+            ref="lap1" means Spring will inject Laptop object
+        -->
+        <property name="com" ref="lap1"/>
+        
+ <!-- <constructor-arg ref="lap1" ></constructor-arg> can be used with constructor injection of reference type as arg -->       
+    </bean>
+
+    <!-- Laptop bean implementing Computer interface -->
+    <bean id="lap1" class="com.autowiring.Laptop" primary="true"/>
+
+    <!-- Desktop bean implementing Computer interface -->
+    <bean id="desk1" class="com.autowiring.Desktop"/>
+
+</beans>

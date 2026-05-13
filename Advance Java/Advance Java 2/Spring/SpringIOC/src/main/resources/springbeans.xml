@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dev" class="com.xmlBeans.Dev">
+        <property name="id" value="101"/>   <!-- Used to assign default value to field of beans  -->
+        <property name="name" value="Ajay XML"/>  <!-- Used to assign default value to field of beans  -->
+        <property name="laptop" ref="lpt1"/>  <!-- Used to assign default value to reference type field of beans  -->
+ <!--   <constructor-arg ref="lpt1" ></constructor-arg>  used for specifying constructor injection but requires constructor to be present with this reference type-->
+ <!-- <constructor-arg index=0/name="id" value="45"> </constructor-arg>  used to set default values to fields of primitive types using constructor injection and requires constructor of this type-->  
+    </bean>
+    <bean id="lpt1" class="com.xmlBeans.Laptop"></bean>
+</beans>
